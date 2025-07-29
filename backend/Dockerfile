@@ -10,5 +10,5 @@ COPY ./pnpm-lock.yaml ./
 RUN pnpm install
 
 COPY . .
-EXPOSE 8080
-CMD ["pnpm", "run", "dev"]
+EXPOSE 8000
+CMD ["pnpm", "dev"]
