@@ -10,6 +10,8 @@ services:
     tty: true
     environment:
       - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - mariadb
   frontend:
     build: ./frontend
     volumes:
@@ -23,7 +25,32 @@ services:
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
     tty: true
+  mariadb:
+    image: mariadb:10.11
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=pitamai
+      - MYSQL_DATABASE=pita-help-desk
+      - MYSQL_USER=pitamai
+      - MYSQL_PASSWORD=pitamai-password
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.2
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+      - PMA_USER=pitamai
+      - PMA_PASSWORD=pitamai-password
+    depends_on:
+      - mariadb
+    restart: always
 
 volumes:
   backend_node_modules:
   frontend_node_modules:
+  mariadb_data:
