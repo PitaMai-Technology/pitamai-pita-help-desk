@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@theme static {
+    --font-sans: 'Noto Sans JP', 'sans-serif';
+
+    --color-green-400: #8bc170;
+    --color-green-900: #d663e;
+}
